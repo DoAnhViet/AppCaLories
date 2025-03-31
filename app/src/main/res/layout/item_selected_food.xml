@@ -36,11 +36,13 @@
         android:id="@+id/btn_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/lavender"
         android:text="Sửa"/>
 
     <Button
         android:id="@+id/btn_remove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/lavender"
         android:text="Xóa"/>
 </LinearLayout>

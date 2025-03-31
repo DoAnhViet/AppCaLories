@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAppDarkGrey"
     android:backgroundTint="#1D1C1C"
     android:orientation="vertical"
     android:padding="16dp">
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:padding="16dp"
-        app:cardBackgroundColor="#716F6F"
+
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
 
@@ -82,8 +81,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#651FFF"
                     android:text="Thêm"
+                    android:backgroundTint="@color/lavender"
                     android:textColor="@android:color/white" />
 
                 <Button
@@ -92,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#651FFF"
+                    android:backgroundTint="@color/lavender"
                     android:text="Sửa"
                     android:textColor="@android:color/white" />
 
@@ -102,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#651FFF"
+                    android:backgroundTint="@color/lavender"
                     android:text="Xóa"
                     android:textColor="@android:color/white" />
             </LinearLayout>

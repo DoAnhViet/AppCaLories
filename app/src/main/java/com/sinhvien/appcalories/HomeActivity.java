@@ -372,9 +372,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
+        // Hiển thị tổng calories + mục tiêu
         txtCalTotal.setText(String.format("Tổng Calories: %d/%d kcal", totalCalories, caloriesTarget));
 
-        // Change color based on goal
+        // Đổi màu chữ dựa trên mục tiêu
         if (totalCalories > caloriesTarget) {
             txtCalTotal.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         } else if (totalCalories == caloriesTarget) {
@@ -382,7 +383,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else {
             txtCalTotal.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
         }
-        txtCalTotal.setText(String.format("Tổng Calories: %d kcal", totalCalories));
+
+        // Cập nhật ProgressBar
+        updateCaloriesProgress(totalCalories);
     }
 
     private void checkUserProfile(String userId) {

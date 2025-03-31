@@ -136,7 +136,8 @@
                     android:layout_marginTop="12dp"
                     android:max="100"
                     android:progress="0"
-                    android:progressDrawable="@drawable/custom_progress"/>
+                    android:progressDrawable="@drawable/custom_progress"
+                    />
 
                 <!-- Dòng 3: Thông tin chi tiết -->
                 <LinearLayout
@@ -261,7 +262,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="90dp"/>
                 </androidx.cardview.widget.CardView>
 
                 <!-- CardView Bữa trưa -->
@@ -324,7 +325,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="90dp"/>
                 </androidx.cardview.widget.CardView>
 
                 <!-- CardView Bữa chiều -->
@@ -387,7 +388,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="90dp"/>
                 </androidx.cardview.widget.CardView>
 
                 <!-- CardView Bữa tối -->
@@ -450,7 +451,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="90dp"/>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
@@ -458,7 +459,8 @@
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <!-- NavigationView -->
