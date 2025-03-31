@@ -23,6 +23,7 @@ public class FoodActivity extends AppCompatActivity {
     // Adapter and Data
     private ArrayAdapter<String> listAdapter;
     private List<Food> foodList;
+    private List<Food> filteredFoodList; // For search results
     private String selectedFoodId;
 
     // Firebase
@@ -60,6 +61,7 @@ public class FoodActivity extends AppCompatActivity {
 
         // Setup list view
         foodList = new ArrayList<>();
+        filteredFoodList = new ArrayList<>();
         listAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -77,30 +79,23 @@ public class FoodActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodList.clear();
-                List<String> displayList = new ArrayList<>();
 
                 for (DataSnapshot foodSnapshot : snapshot.getChildren()) {
                     try {
                         Food food = foodSnapshot.getValue(Food.class);
                         if (food != null) {
-                            // Ensure ID is set (for manual entries)
                             if (food.getId() == null) {
                                 food.setId(foodSnapshot.getKey());
                             }
                             foodList.add(food);
-                            displayList.add(String.format("%s (%s - %d cal)",
-                                    food.getTenMon(),
-                                    food.getCategory(),
-                                    food.getCalories()));
                         }
                     } catch (Exception e) {
                         Log.e("FoodActivity", "Error parsing food data", e);
                     }
                 }
 
-                listAdapter.clear();
-                listAdapter.addAll(displayList);
-                listAdapter.notifyDataSetChanged();
+                // Update both original and filtered lists
+                updateListView(foodList);
             }
 
             @Override
@@ -118,8 +113,9 @@ public class FoodActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(v -> deleteFood());
 
         listViewFood.setOnItemClickListener((parent, view, position, id) -> {
-            if (position < foodList.size()) {
-                Food selectedFood = foodList.get(position);
+            List<Food> currentList = !searchView.getQuery().toString().isEmpty() ? filteredFoodList : foodList;
+            if (position < currentList.size()) {
+                Food selectedFood = currentList.get(position);
                 selectedFoodId = selectedFood.getId();
                 edtFoodName.setText(selectedFood.getTenMon());
                 edtFoodCalories.setText(String.valueOf(selectedFood.getCalories()));
@@ -131,15 +127,46 @@ public class FoodActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 filterFoodList(query);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterFoodList(newText);
-                return false;
+                if (newText.isEmpty()) {
+                    // When search is cleared, show original list
+                    updateListView(foodList);
+                } else {
+                    filterFoodList(newText);
+                }
+                return true;
             }
         });
+    }
+
+    private void filterFoodList(String query) {
+        filteredFoodList.clear();
+
+        for (Food food : foodList) {
+            if (food.getTenMon().toLowerCase().contains(query.toLowerCase())) {
+                filteredFoodList.add(food);
+            }
+        }
+
+        updateListView(filteredFoodList);
+    }
+
+    private void updateListView(List<Food> foodsToDisplay) {
+        List<String> displayList = new ArrayList<>();
+        for (Food food : foodsToDisplay) {
+            displayList.add(String.format("%s (%s - %d cal)",
+                    food.getTenMon(),
+                    food.getCategory(),
+                    food.getCalories()));
+        }
+
+        listAdapter.clear();
+        listAdapter.addAll(displayList);
+        listAdapter.notifyDataSetChanged();
     }
 
     private void addFood() {
@@ -231,21 +258,5 @@ public class FoodActivity extends AppCompatActivity {
         edtFoodName.setText("");
         edtFoodCalories.setText("");
         spinnerCategory.setSelection(0);
-    }
-
-    private void filterFoodList(String query) {
-        // Lọc danh sách món ăn theo tên món ăn
-        List<String> filteredList = new ArrayList<>();
-        for (Food food : foodList) {
-            if (food.getTenMon().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(String.format("%s (%s - %d cal)",
-                        food.getTenMon(),
-                        food.getCategory(),
-                        food.getCalories()));
-            }
-        }
-        listAdapter.clear();
-        listAdapter.addAll(filteredList);
-        listAdapter.notifyDataSetChanged();
     }
 }
