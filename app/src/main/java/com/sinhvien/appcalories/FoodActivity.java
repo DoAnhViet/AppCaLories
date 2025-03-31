@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.*;
 import com.sinhvien.appcalories.models.Food;
@@ -17,6 +18,7 @@ public class FoodActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private Button btnAdd, btnUpdate, btnDelete;
     private ListView listViewFood;
+    private SearchView searchView;
 
     // Adapter and Data
     private ArrayAdapter<String> listAdapter;
@@ -45,6 +47,7 @@ public class FoodActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
         listViewFood = findViewById(R.id.listViewFood);
+        searchView = findViewById(R.id.searchView);
 
         // Setup spinner with standardized categories
         String[] categories = {"Bữa sáng", "Bữa trưa", "Bữa chiều", "Bữa tối"};
@@ -121,6 +124,20 @@ public class FoodActivity extends AppCompatActivity {
                 edtFoodName.setText(selectedFood.getTenMon());
                 edtFoodCalories.setText(String.valueOf(selectedFood.getCalories()));
                 setSpinnerSelection(selectedFood.getCategory());
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterFoodList(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterFoodList(newText);
+                return false;
             }
         });
     }
@@ -214,5 +231,21 @@ public class FoodActivity extends AppCompatActivity {
         edtFoodName.setText("");
         edtFoodCalories.setText("");
         spinnerCategory.setSelection(0);
+    }
+
+    private void filterFoodList(String query) {
+        // Lọc danh sách món ăn theo tên món ăn
+        List<String> filteredList = new ArrayList<>();
+        for (Food food : foodList) {
+            if (food.getTenMon().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(String.format("%s (%s - %d cal)",
+                        food.getTenMon(),
+                        food.getCategory(),
+                        food.getCalories()));
+            }
+        }
+        listAdapter.clear();
+        listAdapter.addAll(filteredList);
+        listAdapter.notifyDataSetChanged();
     }
 }

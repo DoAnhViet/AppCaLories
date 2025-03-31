@@ -3,16 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#1D1C1C"
     android:orientation="vertical"
+    android:backgroundTint="#1D1C1C"
     android:padding="16dp">
 
+    <!-- Thanh tìm kiếm -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:queryHint="Tìm món ăn..."
+        android:iconifiedByDefault="false"
+        android:backgroundTint="@android:color/white" />
+
+    <!-- CardView chứa các thành phần nhập liệu -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:padding="16dp"
-
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
 
@@ -50,17 +61,19 @@
                 android:hint="Calo (kcal)"
                 android:inputType="number"
                 android:padding="10dp" />
+
+            <!-- Khối lượng món ăn -->
             <EditText
                 android:id="@+id/edtDefaultQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@android:drawable/editbox_background"
-                android:hint="Khối lượng(g)"
+                android:hint="Khối lượng (g)"
                 android:inputType="number"
                 android:padding="10dp"
                 android:visibility="gone" />
-            <!-- Chọn danh mục món ăn -->
 
+            <!-- Chọn danh mục món ăn -->
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
@@ -113,8 +126,9 @@
         android:id="@+id/listViewFood"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_marginTop="16dp"
         android:divider="@android:color/background_dark"
         android:dividerHeight="1dp"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:layout_weight="1" />
 </LinearLayout>
